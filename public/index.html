@@ -4,6 +4,30 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="/socket.io/socket.io.js"></script>
+
+    <script>
+        const socket = io();
+
+        socket.on('message', addMessages);
+
+        function addMessages(message){
+            $('#messages').append('<div><strong>' + message.name.charAt(0).toUpperCase() + message.name.slice(1) + '</strong> says: <br><span>' + message.message + '</span></div><hr/>');
+        }
+
+        function getMessages(){
+            $.get('http://localhost:3000/chats', (data) => {
+                data.forEach(addMessages);
+            })
+        }
+
+        function sendMessage(message){
+            $.post('http://localhost:8080/chats', message)
+            $('#name').val('');
+            $('#message').val('');
+        }
+    </script>
     <title>Chat App</title>
 </head>
 <body>
