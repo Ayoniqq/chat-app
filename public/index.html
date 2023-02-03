@@ -5,44 +5,19 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <script src="/socket.io/socket.io.js"></script>
-
-    <script>
-        const socket = io();
-
-        socket.on('message', addMessages);
-
-        function addMessages(message){
-            $('#messages').append('<div><strong>' + message.name.charAt(0).toUpperCase() + message.name.slice(1) + '</strong> says: <br><span>' + message.message + '</span></div><hr/>');
-        }
-
-        function getMessages(){
-            $.get('http://localhost:3000/chats', (data) => {
-                data.forEach(addMessages);
-            })
-        }
-
-        function sendMessage(message){
-            $.post('http://localhost:8080/chats', message)
-            $('#name').val('');
-            $('#message').val('');
-        }
-    </script>
     <title>Chat App</title>
 </head>
 <body>
-    <div class="container">
-        <br>
-        <div class="jumbotron">
-            <h1 class="display-4">Chat Conversation</h1>
-            <br>
-            <div id="messages"></div>
-            <input type="text" class="form-control" placeholder="Sender Name">
-            <br>
-            <textarea name="" class="form-control" id="message" cols="30" rows="10" placeholder="Message..."></textarea>
-            <br>
-            <button class="btn btn-success">Send</button>
+    <main class="container">
+        <div class="messages_container">
+            <div class="messages" id="messages"></div>
+            <form action="" class="input_container" id="form">
+            <input class="input" id="input" placeholder="send message">
+            <button class="btn" type="submit">Send</button>
+            </form>
         </div>
-    </div>
+    </main>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="./script.js"></script>
 </body>
 </html>
